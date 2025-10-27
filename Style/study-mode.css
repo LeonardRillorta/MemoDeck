@@ -1,0 +1,112 @@
+    /* Updated Study Mode */
+    .study-modal-content {
+      border: none;
+      max-width: 800px; /* Increased from default */
+    }
+
+    .study-header {
+      background: linear-gradient(135deg, #4F46E5, #4338CA);
+      color: white;
+      border: none;
+    }
+
+    .study-body {
+      padding: 2rem;
+    }
+
+    /* Quiz Container - Make it larger */
+    .quiz-container {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      min-height: 400px; /* Increased height */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quiz-question {
+      font-size: 1.5rem; /* Larger font */
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #1e293b;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .quiz-input {
+      width: 100%;
+      padding: 1.25rem; /* More padding */
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1.2rem; /* Larger font */
+      margin-bottom: 1.5rem;
+      transition: all 0.3s;
+      height: 120px; /* Taller input */
+      resize: none;
+    }
+
+    /* Flashcard Study */
+    .flashcard-study {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      cursor: pointer;
+      perspective: 1000px;
+      margin: 0 auto;
+      transform-style: preserve-3d;
+    }
+
+    .card-side {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .card-side.front {
+      background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+      color: white;
+      transform: rotateY(0deg);
+    }
+    
+    .card-side.back {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-study.flipped .card-side.front {
+      transform: rotateY(-180deg);
+    }
+
+    .flashcard-study.flipped .card-side.back {
+      transform: rotateY(0deg);
+    }
+
+    .card-content {
+      font-size: 1.75rem; /* Larger font */
+      font-weight: 500;
+      line-height: 1.4;
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      word-break: break-word;
+    }

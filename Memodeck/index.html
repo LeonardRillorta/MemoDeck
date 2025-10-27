@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MemoDeck — Master Anything with Smart Flashcards</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../style/indexStyle.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="memo">Memo</span><span class="deck">Deck</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#features">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item auth-only">
+            <a href="login.html" class="btn btn-sm btn-outline-primary">Log In</a>
+          </li>
+          <li class="nav-item ms-2 auth-only">
+            <a href="register.html" class="btn btn-sm btn-primary">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 hero-content mb-4 mb-lg-0">
+          <h1>Master Knowledge with Intelligent Flashcards</h1>
+          <p class="hero-description">
+            Learn faster and retain longer with spaced repetition. MemoDeck adapts to your pace, tracks your progress, and helps you master any subject.
+          </p>
+          <div class="hero-buttons">
+            <a href="register.html" class="btn btn-primary btn-lg">
+              <i class="fas fa-rocket me-2"></i> Get Started Today
+            </a>
+         <a href="#features" class="btn btn-outline-secondary btn-lg">
+  <i class="fas fa-play-circle me-2"></i> Explore Features
+</a>
+          </div>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-center">
+          <div class="card-showcase">
+            <div class="flashcard front">
+              <div class="card-label">Question</div>
+              <div class="card-text">What is photosynthesis?</div>
+            </div>
+            <div class="flashcard back">
+              <div class="card-label">Answer</div>
+              <div class="card-text">Process by which plants convert sunlight into chemical energy</div>
+            </div>
+            <div class="flashcard flip-hint">
+              <div class="card-label">Click to Flip</div>
+              <div class="card-text"><i class="fas fa-sync-alt"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why MemoDeck?</h2>
+        <p>Everything you need to learn effectively and retain knowledge for life</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-layer-group"></i>
+          </div>
+          <h5>Create & Organize Decks</h5>
+          <p>Build unlimited decks for any subject—Languages, MCAT, History, Coding. Organize your learning journey your way.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-sync-alt"></i>
+          </div>
+          <h5>Smart Study Mode</h5>
+          <p>Flip cards instantly, mark mastery levels, and focus only on what you need to learn. Adaptive pacing keeps you engaged.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h5>Track Your Progress</h5>
+          <p>See real-time stats, mastery percentages, and visual progress bars for every deck. Celebrate wins and identify gaps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Built for Learners, by Learners</h2>
+          <p>
+            We created MemoDeck because we believe learning should be efficient, engaging, and lasting—without burnout or distractions.
+          </p>
+          <p>
+            Whether you're a student preparing for exams, a professional mastering new skills, or a lifelong learner exploring new topics—our platform adapts to your goals.
+          </p>
+        </div>
+        <div class="about-illustration">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="container">
+    <div class="cta">
+      <h2>Ready to Master Anything?</h2>
+      <p>Join thousands of learners using MemoDeck to study smarter and retain longer.</p>
+      <a href="register.html" class="btn btn-lg">
+        <i class="fas fa-arrow-right me-2"></i>Create An Account
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">
+            <span>Memo</span>Deck
+          </div>
+          <p style="margin-top: 1rem; font-size: 0.9rem;">Smart flashcards for learners who want to master knowledge and remember it for life.</p>
+        </div>
+        <div class="footer-column">
+          <h6>Product</h6>
+          <a href="#features">Features</a>
+        </div>
+        <div class="footer-column">
+          <h6>Company</h6>
+          <a href="#">About Us</a>
+        </div>
+        <div class="footer-column">
+          <h6>Legal</h6>
+          <a href="#">Terms & Privacy</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+      <div class="footer-divider">
+        <p>&copy; 2025 MemoDeck. Master anything, retain everything.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Login Prompt Modal -->
+  <div class="modal fade" id="loginPromptModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-body">
+          <div class="modal-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h5 class="fw-bold mb-2">Create Your Account</h5>
+          <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+            Access all MemoDeck features and start mastering your subjects today. It only takes a minute!
+          </p>
+          <div class="d-grid gap-2">
+            <a href="register.html" class="btn btn-primary btn-lg fw-bold">
+              <i class="fas fa-rocket me-2"></i>Get Started Free
+            </a>
+            <a href="login.html" class="btn btn-outline-primary btn-lg fw-bold">
+              Already have an account? Log In
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../script/indexScript.js"></script>
+</body>
+</html>
+</html>     

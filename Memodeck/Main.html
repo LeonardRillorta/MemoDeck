@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — MemoDeck</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../style/Main.css">
+  <link rel="stylesheet" href="../style/study-mode.css">
+  <link rel="stylesheet" href="../style/deck-completion.css">
+  <!-- PapaParse for CSV Import -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+  
+  <!-- Sidebar with Navigation -->
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <span class="memo">Memo</span><span class="deck">Deck</span>
+    </div>
+
+    <div class="sidebar-nav">
+      <a href="Main.html" class="sidebar-nav-item active">
+        <i class="fas fa-layer-group"></i> Decks
+      </a>
+      <a href="Progress.html" class="sidebar-nav-item">
+        <i class="fas fa-chart-line"></i> Dashboard
+      </a>
+      <a href="Profile.html" class="sidebar-nav-item">
+        <i class="fas fa-user"></i> Profile
+      </a>
+      <a href="#" id="sidebarLogout" class="sidebar-nav-item text-danger">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+
+    <div class="sidebar-header">
+      <h5>My Decks</h5>
+    </div>
+    <div class="sidebar-list" id="deckList">
+      <p class="text-muted text-center py-4">No decks yet. Create one!</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container-fluid">
+      <!-- Header -->
+      <div class="dashboard-header">
+        <div>
+          <h1>Welcome back, <span id="welcomeName">User</span>!</h1>
+          <p class="text-muted mb-0">Continue your learning journey</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-primary" id="openImportBtn">
+            <i class="fas fa-file-import me-2"></i>Import Deck
+          </button>
+          <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#createDeckModal">
+            <i class="fas fa-plus-circle me-2"></i>Create New Deck
+          </button>
+        </div>
+      </div>
+
+      <!-- Decks Section -->
+      <section id="decksSection">
+        <div class="section-header">
+          <h2>Your Decks</h2>
+          <p class="text-muted">Click a deck to view and study flashcards</p>
+        </div>
+        <div class="decks-grid" id="decksGrid">
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h4>No Decks Yet</h4>
+            <p>Create your first deck to start learning!</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Archived Decks Section -->
+    <section id="archivedSection" style="margin-top: 3rem;">
+      <div class="section-header">
+        <h2>Archived Decks</h2>
+        <p class="text-muted">These decks are archived but can be restored anytime</p>
+      </div>
+      <div class="decks-grid" id="archivedGrid">
+        <div class="empty-state">
+          <i class="fas fa-archive"></i>
+          <h4>No Archived Decks</h4>
+          <p>Archived decks will appear here.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Create Deck Modal -->
+  <div class="modal fade" id="createDeckModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 shadow-lg border-0">
+        <div class="modal-header border-0 pb-0">
+          <h4 class="modal-title fw-bold text-dark">Create New Deck</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body py-4 px-5">
+          <form id="createDeckForm">
+            <div class="mb-4">
+              <label for="deckName" class="form-label fw-semibold text-dark">Deck Name</label>
+              <input type="text" class="form-control form-control-lg rounded-3 py-3 px-4 shadow-sm" id="deckName" placeholder="e.g., Spanish Vocabulary" required>
+              <div class="form-text text-muted mt-2">Give your deck a memorable name</div>
+            </div>
+            <div class="mb-4">
+              <label for="deckDescription" class="form-label fw-semibold text-dark">Description (Optional)</label>
+              <textarea class="form-control form-control-lg rounded-3 py-3 px-4 shadow-sm" id="deckDescription" rows="3" placeholder="What will you learn in this deck?"></textarea>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-dark d-block">Deck Color</label>
+              <div class="color-picker mt-2 d-flex flex-wrap gap-3">
+                <input type="radio" name="deckColor" value="primary" id="color-primary" checked>
+                <label for="color-primary" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #4F46E5, #4338CA);"></label>
+
+                <input type="radio" name="deckColor" value="secondary" id="color-secondary">
+                <label for="color-secondary" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #10B981, #059669);"></label>
+
+                <input type="radio" name="deckColor" value="accent" id="color-accent">
+                <label for="color-accent" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #F59E0B, #D97706);"></label>
+
+                <input type="radio" name="deckColor" value="danger" id="color-danger">
+                <label for="color-danger" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #EF4444, #DC2626);"></label>
+
+                <input type="radio" name="deckColor" value="info" id="color-info">
+                <label for="color-info" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #06B6D4, #0891B2);"></label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0 pt-0 pb-4 px-5 d-flex justify-content-end gap-3">
+          <button type="button" class="btn btn-lg btn-outline-secondary rounded-3 px-4 py-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-lg btn-primary rounded-3 px-4 py-2" id="saveDeckBtn">Create Deck</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import Deck Modal -->
+  <div class="modal fade" id="importDeckModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 shadow-lg border-0">
+        <div class="modal-header border-0 pb-0">
+          <h4 class="modal-title fw-bold text-dark">
+            <i class="fas fa-file-import me-2"></i>Import Deck from CSV
+          </h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body py-4 px-5">
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>CSV Format:</strong> Your file must have two columns: "Question" and "Answer"
+          </div>
+          
+          <form id="importDeckForm">
+            <div class="mb-4">
+              <label for="csvFile" class="form-label fw-semibold text-dark">Select CSV File</label>
+              <input type="file" class="form-control form-control-lg" id="csvFile" accept=".csv" required>
+              <div class="form-text text-muted mt-2">Choose a CSV file with your flashcards</div>
+            </div>
+            
+            <div id="csvPreview" class="mb-4"></div>
+            
+            <div class="mb-4">
+              <label for="importDeckName" class="form-label fw-semibold text-dark">Deck Name</label>
+              <input type="text" class="form-control form-control-lg rounded-3 py-3 px-4 shadow-sm" id="importDeckName" placeholder="e.g., Imported Vocabulary" required>
+            </div>
+            
+            <div class="mb-4">
+              <label for="importDeckDescription" class="form-label fw-semibold text-dark">Description (Optional)</label>
+              <textarea class="form-control form-control-lg rounded-3 py-3 px-4 shadow-sm" id="importDeckDescription" rows="2" placeholder="Describe this deck..."></textarea>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-semibold text-dark d-block">Deck Color</label>
+              <div class="color-picker mt-2 d-flex flex-wrap gap-3">
+                <input type="radio" name="importDeckColor" value="primary" id="import-color-primary" checked>
+                <label for="import-color-primary" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #4F46E5, #4338CA);"></label>
+
+                <input type="radio" name="importDeckColor" value="secondary" id="import-color-secondary">
+                <label for="import-color-secondary" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #10B981, #059669);"></label>
+
+                <input type="radio" name="importDeckColor" value="accent" id="import-color-accent">
+                <label for="import-color-accent" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #F59E0B, #D97706);"></label>
+
+                <input type="radio" name="importDeckColor" value="danger" id="import-color-danger">
+                <label for="import-color-danger" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #EF4444, #DC2626);"></label>
+
+                <input type="radio" name="importDeckColor" value="info" id="import-color-info">
+                <label for="import-color-info" class="color-option rounded-3 shadow-sm" style="background: linear-gradient(135deg, #06B6D4, #0891B2);"></label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer border-0 pt-0 pb-4 px-5 d-flex justify-content-end gap-3">
+          <button type="button" class="btn btn-lg btn-outline-secondary rounded-3 px-4 py-2" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-lg btn-primary rounded-3 px-4 py-2" id="importDeckBtn">
+            <i class="fas fa-upload me-2"></i>Import Deck
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deck Detail Modal -->
+  <div class="modal fade" id="deckDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="deckDetailTitle">Deck Name</h5>
+            <p class="text-muted mb-0" id="deckDetailDesc">Description</p>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="deck-actions mb-4">
+            <button class="btn btn-primary" id="addCardBtn" data-bs-toggle="modal" data-bs-target="#addCardModal">
+              <i class="fas fa-plus me-2"></i>Add Flashcard
+            </button>
+            <button class="btn btn-success" id="exportDeckBtn">
+              <i class="fas fa-file-export me-2"></i>Export Deck
+            </button>
+            <button class="btn btn-warning text-white" id="archiveDeckBtn">
+              <i class="fas fa-archive me-2"></i>Archive Deck
+            </button>
+            <button class="btn btn-danger" id="deleteDeckBtn">
+              <i class="fas fa-trash me-2"></i>Delete Deck
+            </button>
+          </div>
+
+          <div class="study-controls mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Study Mode</h5>
+                <div class="btn-group w-100 mb-3" role="group" aria-label="Study mode selection">
+                  <input type="radio" class="btn-check" name="studyMode" id="flipModeBtn" checked>
+                  <label class="btn btn-outline-primary" for="flipModeBtn">
+                    <i class="fas fa-sync-alt me-2"></i>Flip Cards
+                  </label>
+                  
+                  <input type="radio" class="btn-check" name="studyMode" id="quizModeBtn">
+                  <label class="btn btn-outline-primary" for="quizModeBtn">
+                    <i class="fas fa-keyboard me-2"></i>Quiz Mode
+                  </label>
+                </div>
+                <button class="btn btn-success w-100" id="studyDeckBtn">
+                  <i class="fas fa-play me-2"></i>Start Study Session
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="deck-stats mb-4">
+            <div class="stat-item">
+              <span>Total Cards:</span>
+              <strong id="deckCardCount">0</strong>
+            </div>
+            <div class="stat-item">
+              <span>Quiz Score:</span>
+              <strong id="deckMasteredCount">Not completed yet</strong>
+            </div>
+            <div class="stat-item">
+              <span>Progress:</span>
+              <div class="progress" style="height: 24px;">
+                <div class="progress-bar" id="deckProgress" role="progressbar" style="width: 100%">0%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cards-list" id="cardsList">
+            <p class="text-muted text-center py-4">No flashcards yet. Add one to start!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Flashcard Modal -->
+  <div class="modal fade" id="addCardModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Flashcard</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="addCardForm">
+            <div class="mb-3">
+              <label for="cardQuestion" class="form-label">Question (Front)</label>
+              <textarea class="form-control" id="cardQuestion" rows="3" placeholder="What do you want to ask?" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="cardAnswer" class="form-label">Answer (Back)</label>
+              <textarea class="form-control" id="cardAnswer" rows="3" placeholder="What is the answer?" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveCardBtn">Add Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Study Mode Modal -->
+  <div class="modal fade" id="studyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content study-modal-content">
+        <div class="modal-header study-header">
+          <div>
+            <h5 class="modal-title" id="studyDeckTitle">Study Deck</h5>
+            <small class="text-muted" id="cardProgress">Card 1 of 5</small>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body study-body">
+          <!-- Flip Card Mode -->
+          <div id="flipCardContainer">
+            <div class="flashcard-study" id="studyFlashcard">
+              <div class="card-side front" id="cardFront">
+                <p class="card-label">Question</p>
+                <p class="card-content" id="cardFrontContent">Loading...</p>
+                <p class="card-hint">Click to reveal answer</p>
+              </div>
+              <div class="card-side back d-none" id="cardBack">
+                <p class="card-label">Answer</p>
+                <p class="card-content" id="cardBackContent">Loading...</p>
+              </div>
+            </div>
+
+            <div class="study-controls mt-4">
+              <button class="btn btn-outline-secondary" id="prevCardBtn">
+                <i class="fas fa-arrow-left me-2"></i>Previous
+              </button>
+              <button class="btn btn-primary" id="nextCardBtn">
+                Next<i class="fas fa-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quiz Mode -->
+          <div id="quizContainer" style="display: none;">
+            <div class="quiz-container">
+              <div class="quiz-question" id="quizQuestion">Loading question...</div>
+              
+              <div class="mb-4">
+                <textarea class="quiz-input" id="quizInput" placeholder="Type your answer here..." autocomplete="off" rows="4"></textarea>
+              </div>
+
+              <div class="quiz-feedback" id="quizFeedback">
+                <div id="feedbackMessage"></div>
+                <div class="quiz-answer" id="correctAnswer"></div>
+              </div>
+
+              <div class="study-controls">
+                <button class="btn btn-secondary" id="skipBtn">
+                  <i class="fas fa-forward me-2"></i>Skip
+                </button>
+                <button class="btn btn-primary" id="submitBtn">
+                  <i class="fas fa-check me-2"></i>Submit
+                </button>
+                <button class="btn btn-success" id="nextBtn" style="display: none;">
+                  <i class="fas fa-arrow-right me-2"></i>Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Deck Modal -->
+  <div class="modal fade" id="editDeckModal" tabindex="-1" aria-labelledby="editDeckModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editDeckModalLabel">
+            <i class="fas fa-edit me-2"></i>Edit Deck
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editDeckForm">
+            <div class="mb-3">
+              <label for="editDeckName" class="form-label">Deck Name *</label>
+              <input type="text" class="form-control" id="editDeckName" required>
+            </div>
+            <div class="mb-3">
+              <label for="editDeckDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="editDeckDescription" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Deck Color</label>
+              <div class="color-picker">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="editDeckColor" id="editColorPrimary" value="primary">
+                  <label class="form-check-label color-label" for="editColorPrimary" style="background: linear-gradient(135deg, #4F46E5, #4338CA)"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="editDeckColor" id="editColorSecondary" value="secondary">
+                  <label class="form-check-label color-label" for="editColorSecondary" style="background: linear-gradient(135deg, #10B981, #059669)"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="editDeckColor" id="editColorAccent" value="accent">
+                  <label class="form-check-label color-label" for="editColorAccent" style="background: linear-gradient(135deg, #F59E0B, #D97706)"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="editDeckColor" id="editColorDanger" value="danger">
+                  <label class="form-check-label color-label" for="editColorDanger" style="background: linear-gradient(135deg, #EF4444, #DC2626)"></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="editDeckColor" id="editColorInfo" value="info">
+                  <label class="form-check-label color-label" for="editColorInfo" style="background: linear-gradient(135deg, #06B6D4, #0891B2)"></label>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-2"></i>Cancel
+          </button>
+          <button type="button" class="btn btn-primary" id="updateDeckBtn">
+            <i class="fas fa-save me-2"></i>Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Card Modal -->
+  <div class="modal fade" id="editCardModal" tabindex="-1" aria-labelledby="editCardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCardModalLabel">
+            <i class="fas fa-edit me-2"></i>Edit Flashcard
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editCardForm">
+            <div class="mb-3">
+              <label for="editCardQuestion" class="form-label">Question *</label>
+              <textarea class="form-control" id="editCardQuestion" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="editCardAnswer" class="form-label">Answer *</label>
+              <textarea class="form-control" id="editCardAnswer" rows="3" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-2"></i>Cancel
+          </button>
+          <button type="button" class="btn btn-primary" id="updateCardBtn">
+            <i class="fas fa-save me-2"></i>Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../script/MainAuth.js"></script>
+<script src="../script/Main.js"></script>
+<script src="../script/study.js"></script>
+<script src="../script/edit.js"></script>
+
+</body>
+</html>

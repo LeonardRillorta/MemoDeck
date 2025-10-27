@@ -1,0 +1,35 @@
+/* Dashboard styles — aligned with Features/Index design */
+:root{
+  --primary:#4F46E5;
+  --primary-dark:#4338CA;
+  --secondary:#10B981;
+  --surface:#F9FAFB;
+  --text:#1F2937;
+  --text-muted:#6B7280;
+  --card-bg:#FFFFFF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(135deg,#f0f9ff 0%,#f8fafc 100%); color:var(--text);}
+.navbar{background:var(--white);border-bottom:1px solid #E5E7EB;padding:1rem 0;position:sticky;top:0;z-index:1000}
+.navbar-brand .memo{color:var(--primary)}
+.navbar-brand .deck{color:var(--secondary)}
+.nav-link{color:var(--text-muted) !important}
+.nav-link:hover{color:var(--primary) !important}
+.main-content{padding:3rem 0}
+.dashboard-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid #E5E7EB;margin-bottom:2rem}
+.dashboard-header h1{font-size:2rem; font-weight:800; color:var(--text)}
+.section-header h2{font-size:1.5rem;color:var(--text)}
+.stat-card{background:var(--white);border:1px solid #E5E7EB;padding:1.25rem;border-radius:12px;text-align:center}
+.stat-icon{font-size:1.75rem;margin-bottom:0.5rem;color:var(--primary)}
+.stat-number{font-size:1.6rem;font-weight:700;color:var(--primary)}
+.stat-label{color:var(--text-muted);font-size:0.9rem}
+.quick-action-btn{background:var(--white);border:1px solid #E5E7EB;padding:1.25rem;border-radius:10px;text-align:center;cursor:pointer}
+.quick-action-btn:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.05)}
+.deck-card{background:var(--white);border:1px solid #E5E7EB;border-radius:10px;padding:1rem;margin-bottom:1rem;cursor:pointer}
+.deck-title{font-weight:700;color:var(--text)}
+.deck-info{color:var(--text-muted);font-size:0.9rem;display:flex;gap:1rem}
+.progress{background:#F1F5F9;height:8px;border-radius:8px;margin-top:0.75rem}
+.progress-bar{background:linear-gradient(90deg,var(--primary),var(--primary-dark));height:8px;border-radius:8px}
+.activity-item{background:#FFFFFF;border-left:3px solid var(--primary);padding:0.75rem;margin-bottom:0.75rem;border-radius:6px}
+.activity-time{color:var(--text-muted);font-size:0.85rem}
+@media(max-width:768px){.dashboard-header{flex-direction:column;align-items:flex-start;gap:1rem}.stat-card{margin-bottom:1rem}}
