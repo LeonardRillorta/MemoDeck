@@ -842,6 +842,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     studyModal: window.studyModal,
     hasHide: typeof window.deckDetailModal?.hide === 'function'
   });
+
+  // Initialize Bootstrap tooltips
+const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
+
+// Restore button actions for deck detail modal
+document.getElementById('exportDeckBtn').addEventListener('click', () => {
+  exportDeck(state.currentDeck);
+});
+
+document.getElementById('archiveDeckBtn').addEventListener('click', () => {
+  archiveDeck(state.currentDeck);
+});
+
+document.getElementById('deleteDeckBtn').addEventListener('click', () => {
+  deleteDeck(state.currentDeck);
+});
+
+
 });
 
 // Keep global functions for inline onclick
